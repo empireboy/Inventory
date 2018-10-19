@@ -265,6 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396564711}
   - component: {fileID: 1396564712}
+  - component: {fileID: 1396564713}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -296,5 +297,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d91c3b147b800458ed697f3b13b0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventories: []
-  _items: []
+  _inventories:
+  - _title: Skulls
+    _rows: 1
+    _columns: 1
+    _itemIndexes: 00000000
+  _items:
+  - _title: Skull
+    _description: A special artifact
+--- !u!114 &1396564713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1396564710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa717cdca5f2fb47acb468bb45a1955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

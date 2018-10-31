@@ -3,7 +3,8 @@
 namespace CM.Essentials.Inventory
 {
 	[System.Serializable]
-	public class Item
+	[CreateAssetMenu(menuName = "CM/Essentials/Inventory/New Item", fileName = "NewItem.asset")]
+	public class Item : ScriptableObject
 	{
 		[SerializeField] private string _title;
 		public string Title { get { return _title; } set { _title = value; } }

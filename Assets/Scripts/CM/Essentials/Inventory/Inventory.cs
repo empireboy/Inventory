@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using CM.Essentials.GridExtension;
 
 namespace CM.Essentials.Inventory
 {
 	[System.Serializable]
-	public class Inventory : IInventory
+	[CreateAssetMenu(menuName = "CM/Essentials/Inventory/New Inventory", fileName = "NewInventory.asset")]
+	public class Inventory : ScriptableObject, IInventory
 	{
 		[SerializeField] private string _title;
 		public string Title { get { return _title; } set { _title = value; } }
@@ -12,31 +14,53 @@ namespace CM.Essentials.Inventory
 		public int Rows { get { return _rows; } set { _rows = value; } }
 		[SerializeField] private int _columns;
 		public int Columns { get { return _columns; } set { _columns = value; } }
-		[SerializeField] private List<int> _itemIndexes = new List<int>();
+		[SerializeField] private List<string> _containingItemsByTitleTemp;
+
+		private Dictionary<int, string> _containingItemsByTitle;
 
 		private Item[,] _stock;
 
 		public void Setup()
 		{
-			_stock = new Item[_rows, _columns];
-		}
+			_containingItemsByTitle = new Dictionary<int, string>();
+			for (int i = 0; i < _containingItemsByTitleTemp.Count; i++)
+				_containingItemsByTitle.Add(i, _containingItemsByTitleTemp[i]);
 
-		public void Setup(string title, int rows, int columns)
-		{
-			_title = title;
-			_columns = columns;
-			_rows = rows;
-			_stock = new Item[rows, columns];
+			_stock = new Item[_rows, _columns];
 		}
 
 		public Item GetItem(int row, int column)
 		{
-			return _stock[row, column];
+			if (!GridExt.IsInRange<Item>(_stock, new Vector2(row, column)))
+			{
+				Debug.LogWarning("Grid position (" + row + "," + column + ") in Inventory [" + _title + "] is out of range");
+			} // Debug
+			
+			return GridExt.IsInRange<Item>(_stock, new Vector2(row, column)) ? _stock[row, column] : null;
 		}
 
 		public void AddItem(Item item, int row, int column)
 		{
-			_stock[row, column] = item;
+			if (item == null)
+			{
+				Debug.LogWarning("Item (" + "undefined" + ") can't be placed in this inventory (" + _title + ")");
+				return;
+			} // Debug
+
+			if (!GridExt.IsInRange<Item>(_stock, new Vector2(row, column)))
+			{
+				Debug.LogWarning("Grid position (" + row + "," + column + ") in Inventory [" + _title + "] is out of range");
+				return;
+			} // Debug
+
+			if (_containingItemsByTitle.ContainsValue(item.Title))
+			{
+				_stock[row, column] = item;
+			} // Adding item to row and column
+			else
+			{
+				Debug.LogWarning("Item (" + item.Title + ") can't be placed in this inventory (" + _title + ")");
+			} // Debug
 		}
 	}
 }

@@ -1,35 +1,37 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace CM.Essentials.Inventory
 {
 	public class InventoryManager : MonoBehaviour
 	{
-		[SerializeField] private List<Inventory> _inventories = new List<Inventory>();
-		[SerializeField] private List<Item> _items = new List<Item>();
-
-		private static InventoryManager _instance;
-		public static InventoryManager Instance
+		[SerializeField] private List<InventoryContainer> _inventoryContainers;
+		public List<InventoryContainer> InventoryContainer
 		{
-			get { return _instance; }
+			get
+			{
+				return _inventoryContainers;
+			}
 		}
 
-		private void Awake()
+		[SerializeField] private ItemContainer _itemContainer;
+		public ItemContainer ItemContainer
 		{
-			if (_instance == null) _instance = this;
-
-			foreach (Inventory inventory in _inventories)
-				inventory.Setup();
+			get
+			{
+				return _itemContainer;
+			}
 		}
 
-		public Item GetItemByIndex(int index)
+		private void Start()
 		{
-			return _items[index];
-		}
+			_inventoryContainers[0].Setup();
+			_itemContainer.Setup();
 
-		public Inventory GetInventoryByIndex(int index)
-		{
-			return _inventories[index];
+			_inventoryContainers[0].GetInventoryByIndex(0).AddItem(_itemContainer.GetItemByIndex(0), 0, 0);
+
+			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(0, 0).Title);
+			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(0, 0).Description);
 		}
 	}
 }

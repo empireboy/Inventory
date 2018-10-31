@@ -28,10 +28,10 @@ namespace CM.Essentials.Inventory
 			_inventoryContainers[0].Setup();
 			_itemContainer.Setup();
 
-			_inventoryContainers[0].GetInventoryByIndex(0).AddItem(_itemContainer.GetItemByIndex(0), 0, 0);
+			_inventoryContainers[0].GetInventoryByIndex(0).AddItem(_itemContainer.GetItemByIndex(0), 2, 1);
 
-			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(0, 0).Title);
-			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(0, 0).Description);
+			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(2, 1).Title);
+			Debug.Log(_inventoryContainers[0].GetInventoryByIndex(0).GetItem(2, 1).Description);
 		}
 	}
 }

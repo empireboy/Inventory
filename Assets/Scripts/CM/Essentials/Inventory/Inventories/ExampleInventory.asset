@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69a0c46d61b4a2a4298ecbedb71a14db, type: 3}
-  m_Name: Inventory1
+  m_Name: ExampleInventory
   m_EditorClassIdentifier: 
-  _title: Inventory1
-  _rows: 1
-  _columns: 1
+  _title: ExampleInventory
+  _rows: 5
+  _columns: 2
   _containingItemsByTitleTemp:
-  - Item1
+  - ExampleItem

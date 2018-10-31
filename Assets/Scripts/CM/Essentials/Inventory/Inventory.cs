@@ -20,6 +20,11 @@ namespace CM.Essentials.Inventory
 
 		private Item[,] _stock;
 
+		public delegate void SetupHandler(Inventory inventory);
+		public event SetupHandler OnSetupFinished;
+		public delegate void ItemAddedHandler(Inventory inventory, Item item, int row, int column);
+		public event ItemAddedHandler OnItemAdded;
+
 		public void Setup()
 		{
 			_containingItemsByTitle = new Dictionary<int, string>();
@@ -27,6 +32,9 @@ namespace CM.Essentials.Inventory
 				_containingItemsByTitle.Add(i, _containingItemsByTitleTemp[i]);
 
 			_stock = new Item[_rows, _columns];
+
+			if (OnSetupFinished != null)
+				OnSetupFinished(this);
 		}
 
 		public Item GetItem(int row, int column)
@@ -56,6 +64,9 @@ namespace CM.Essentials.Inventory
 			if (_containingItemsByTitle.ContainsValue(item.Title))
 			{
 				_stock[row, column] = item;
+
+				if (OnItemAdded != null)
+					OnItemAdded(this, item, row, column);
 			} // Adding item to row and column
 			else
 			{
